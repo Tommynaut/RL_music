@@ -23,7 +23,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
 )
 public class ShowMusicPlugin extends Plugin
 {
-	private static final int MUSIC_TRACK_WIDGET_ID = 15663113;
+	private static final int MUSIC_TRACK_WIDGET_ID = 15663108;
 	private String lastTrack = "";
 
 	@Inject

@@ -14,7 +14,7 @@ import net.runelite.client.ui.overlay.components.TitleComponent;
 
 class ShowMusicOverlay extends OverlayPanel
 {
-    private static final int MUSIC_TRACK_WIDGET_ID = 15663113;
+    private static final int MUSIC_TRACK_WIDGET_ID = 15663108;
     private final Client client;
     private final ShowMusicConfig config;
 
