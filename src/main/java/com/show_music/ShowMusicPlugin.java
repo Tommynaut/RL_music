@@ -10,12 +10,15 @@ import net.runelite.api.events.*;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.ui.overlay.OverlayManager;
+
+import java.util.Objects;
 
 @Slf4j
 @PluginDescriptor(
@@ -53,9 +56,16 @@ public class ShowMusicPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
-		if(provideConfig(configManager).displayToggle() == DisplayMode.Overlay) overlayManager.remove(overlay);
+        overlayManager.removeIf(o -> o instanceof ShowMusicOverlay); // remove if there is an instance
 		lastTrack = ""; // Clean up on plugin stop
 	}
+
+    @Subscribe
+    public void onConfigChanged(ConfigChanged event){
+        if(!event.getGroup().equals("musicOverlay") || !event.getKey().equals("displayToggle")) return; // nothing to do if it's not a displayToggle change for our plugin
+        overlayManager.removeIf(o -> o instanceof ShowMusicOverlay); // remove if there is already an instance of ShowMusicOverlay
+        if(Objects.equals(event.getNewValue(), "Overlay")) overlayManager.add(overlay); // if going from Text > Overlay add to overlayManager
+    }
 
 	@Subscribe
 	public void onGameTick(GameTick event) {
