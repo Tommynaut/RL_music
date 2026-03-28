@@ -8,6 +8,7 @@ import static net.runelite.client.ui.overlay.OverlayManager.OPTION_CONFIGURE;
 
 import com.show_music.config.DisplayMode;
 import net.runelite.api.Client;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.ui.overlay.OverlayPanel;
 import net.runelite.client.ui.overlay.OverlayPosition;
 import net.runelite.client.ui.overlay.components.TitleComponent;
@@ -35,10 +36,10 @@ class ShowMusicOverlay extends OverlayPanel
     public Dimension render(Graphics2D graphics)
     {
         if(config.displayToggle() != DisplayMode.Overlay) return null;
-        var musicWidget = client.getWidget(MUSIC_TRACK_WIDGET_ID);
+        Widget musicWidget = client.getWidget(MUSIC_TRACK_WIDGET_ID);
         if(musicWidget == null) return null;
         panelComponent.getChildren().clear(); // reduce stacking
-        final var currentTrackString = "Current Track: " + musicWidget.getText();
+        final String currentTrackString = "Current Track: " + musicWidget.getText();
         if(client.getMusicVolume() == 0 && config.muteHide()) return null;
         panelComponent.getChildren().add((TitleComponent.builder())
                 .text(currentTrackString)

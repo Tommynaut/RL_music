@@ -56,14 +56,14 @@ public class ShowMusicPlugin extends Plugin
 	@Override
 	protected void shutDown() throws Exception
 	{
-        overlayManager.removeIf(o -> o instanceof ShowMusicOverlay); // remove if there is an instance
-		lastTrack = ""; // Clean up on plugin stop
+		overlayManager.remove(overlay);
+		lastTrack = "";
 	}
 
     @Subscribe
     public void onConfigChanged(ConfigChanged event){
         if(!event.getGroup().equals("musicOverlay") || !event.getKey().equals("displayToggle")) return; // nothing to do if it's not a displayToggle change for our plugin
-        overlayManager.removeIf(o -> o instanceof ShowMusicOverlay); // remove if there is already an instance of ShowMusicOverlay
+		overlayManager.remove(overlay); // remove if there is already an instance of ShowMusicOverlay
         if(Objects.equals(event.getNewValue(), "Overlay")) overlayManager.add(overlay); // if going from Text > Overlay add to overlayManager
     }
 
