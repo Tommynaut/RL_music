@@ -76,10 +76,18 @@ public class ShowMusicPlugin extends Plugin
 			String currentTrack = musicWidget.getText();
 			if (currentTrack != null && !currentTrack.equals(lastTrack)) {
 				lastTrack = currentTrack;
-				chatMessageManager.queue(QueuedMessage.builder()
-						.type(net.runelite.api.ChatMessageType.GAMEMESSAGE)
-						.runeLiteFormattedMessage("Now playing: " + currentTrack)
-						.build());
+				if (provideConfig(configManager).showUnlockHint()) {
+					String unlockHint = UnlockHints.getUnlockHint(currentTrack);
+					chatMessageManager.queue(QueuedMessage.builder()
+							.type(net.runelite.api.ChatMessageType.GAMEMESSAGE)
+							.runeLiteFormattedMessage("Now playing: " + currentTrack + " - " + unlockHint)
+							.build());
+				} else {
+					chatMessageManager.queue(QueuedMessage.builder()
+							.type(net.runelite.api.ChatMessageType.GAMEMESSAGE)
+							.runeLiteFormattedMessage("Now playing: " + currentTrack)
+							.build());
+				}
 			}
 		}
 	}

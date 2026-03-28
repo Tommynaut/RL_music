@@ -27,4 +27,12 @@ public interface ShowMusicConfig  extends Config {
     default DisplayMode displayToggle(){
         return DisplayMode.Overlay;
     }
+
+	@ConfigItem(
+			keyName = "showUnlockHint",
+			name = "Show Unlock Hint (text only)",
+			description = "Show the unlock hint for the currently playing song, only for Text display mode",
+			position = 3
+	)
+	default boolean showUnlockHint() { return false; }
 }
